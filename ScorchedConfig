@@ -1,0 +1,52 @@
+package com.kennethbgoodin.bukkit.util;
+
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+
+import com.kennethbgoodin.bukkit.Scorched;
+
+public class ScorchedConfig {
+	
+	@SuppressWarnings("unused")
+	private static Location loc1, loc2;
+	public static double xCoordRight, yCoordRight, zCoordRight;
+	public static double xCoordLeft, yCoordLeft, zCoordLeft;
+
+	public static void storeCoords(String name, Player player) {
+		String path = player.getWorld().getName() + "." + name + ".";
+		Scorched.getInstance().getConfig().set(path + "R.X", xCoordRight);
+		Scorched.getInstance().getConfig().set(path + "R.Y", yCoordRight);
+		Scorched.getInstance().getConfig().set(path + "R.Z", zCoordRight);
+
+		Scorched.getInstance().getConfig().set(path + "L.X", xCoordLeft);
+		Scorched.getInstance().getConfig().set(path + "L.Y", yCoordLeft);
+		Scorched.getInstance().getConfig().set(path + "L.Z", zCoordLeft);
+		Scorched.getInstance().saveConfig();
+	}
+
+	public static void setBounds(String name, Player player) {
+		String path = player.getWorld().getName() + "." + name + ".";
+		loc1 = new Location(player.getWorld(), Scorched.getInstance().getConfig()
+				.getDouble(path + "R.X"), Scorched.getInstance().getConfig()
+				.getDouble(path + "R.Y"), Scorched.getInstance().getConfig()
+				.getDouble(path + "R.Z"));
+
+		loc2 = new Location(player.getWorld(), Scorched.getInstance().getConfig()
+				.getDouble(path + "L.X"), Scorched.getInstance().getConfig()
+				.getDouble(path + "L.Y"), Scorched.getInstance().getConfig()
+				.getDouble(path + "L.Z"));
+	}
+
+	public static void setLeftCoords(Location loc) {
+		xCoordLeft = loc.getX();
+		yCoordLeft = loc.getY();
+		zCoordLeft = loc.getZ();
+	}
+
+	public static void setRightCoords(Location loc) {
+		xCoordRight = loc.getX();
+		yCoordRight = loc.getY();
+		zCoordRight = loc.getZ();
+	}
+
+}
