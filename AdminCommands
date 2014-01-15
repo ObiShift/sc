@@ -1,0 +1,40 @@
+package com.kennethbgoodin.bukkit;
+
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import com.kennethbgoodin.bukkit.util.ScorchedConfig;
+
+public class AdminCommands implements CommandExecutor {
+
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		
+		if (sender instanceof Player){
+			Player player = (Player) sender;
+			if (args[0].equalsIgnoreCase("create")){
+				if (args.length == 2){
+					player.sendMessage("Add the create method");
+					ScorchedConfig.storeCoords(args[1], player); //args[1] = name
+				} else {
+					player.sendMessage(ChatColor.RED + "Correct syntax: /sc create <name>");
+				}
+			} else if (args[0].equalsIgnoreCase("node")){
+				if (args.length == 2){
+					@SuppressWarnings("deprecation")
+					Node node = new Node(args[1], player.getTargetBlock(null, 20).getLocation());
+					node.spawnNode();
+				} else {
+					player.sendMessage(ChatColor.RED + "Correct syntax: /sc node <type>");
+				}
+			}
+			
+		}
+		
+		return false;
+	}
+
+}
