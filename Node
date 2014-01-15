@@ -1,0 +1,59 @@
+package com.kennethbgoodin.bukkit;
+
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+
+public class Node {
+	
+	private  String type;
+	private Location loc;
+	
+	public Node(String type, Location loc){
+		this.type = type;
+		this.loc = loc;
+	}
+	
+	public  String getType(){
+		return type;
+	}
+	
+	public Location getLoc(){
+		return loc;
+	}
+
+
+	@SuppressWarnings("deprecation")
+	public void spawnNode() {
+		loc.setY(loc.getY() + 1);
+		Block block = loc.getBlock();
+		block.setType(Material.LOG);
+		block.setData((byte) 4);
+		if (type.equalsIgnoreCase("wood")) {
+			spawnBlocks(4, loc);
+
+			loc.setZ(loc.getZ() + 1);
+			loc.setX(loc.getX() - 4);
+			spawnBlocks(3, loc);
+
+			loc.setZ(loc.getZ() - 2);
+			loc.setX(loc.getX() - 3);
+			spawnBlocks(3, loc);
+			
+			loc.setY(loc.getY() + 1);
+			loc.setZ(loc.getZ() + 1);
+			loc.setX(loc.getX() - 3);
+			spawnBlocks(3, loc);
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public void spawnBlocks(int length, Location loc) {
+		for (int i = 0; i < length; i++) {
+			loc.setX(loc.getX() + 1);
+			Block block = loc.getBlock();
+			block.setType(Material.LOG);
+			block.setData((byte) 4);
+		}
+	}
+}
