@@ -1,0 +1,45 @@
+package com.kennethbgoodin.bukkit;
+
+import java.io.File;
+
+import org.bukkit.ChatColor;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class Scorched extends JavaPlugin {
+	
+	private static Scorched instance;
+	
+	public void onEnable(){
+		instance = this;
+		createConfig();
+		getServer().getPluginManager().registerEvents(new PlayerListener(), instance);
+		AdminCommands adminCommands = new AdminCommands();
+		getCommand("sc").setExecutor(adminCommands);
+	}
+	
+	public void onDisable(){
+		instance = null;
+	}
+	
+	public static Scorched getInstance(){
+		return instance;
+	}
+	
+	public void createConfig() {
+		try {
+			File file = new File(getDataFolder(), "config.yml");
+
+			if (!getDataFolder().exists()) {
+				getDataFolder().mkdirs();
+			}
+			if (!file.exists()) {
+				getLogger().info(ChatColor.RED + "Config.yml not found, creating now");
+				saveConfig();
+			} else {
+				getLogger().info(ChatColor.GREEN + "Config.yml found!");
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
